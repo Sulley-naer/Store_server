@@ -343,7 +343,13 @@ namespace Shop.Controllers
                 return BadRequest("请求异常");
 
             List<Orders> res = db
-                .Orders.Where(x => x.belong.Equals(value.username))
+                .Orders.Where(
+                    x => x.belong.Equals(value.username) &&
+                         (x.status == (value.type == "complete") ||
+                          x.status != (value.type == "wait") ||
+                          value.type == "All"
+                          )
+                    )
                 .OrderBy(g => g.ID)
                 .Skip((value.page - 1) * 10)
                 .Take(10)
