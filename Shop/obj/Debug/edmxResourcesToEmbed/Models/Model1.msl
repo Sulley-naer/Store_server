@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="shopModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="PlayerList">
+      <EntityTypeMapping TypeName="shopModel.PlayerList">
+        <MappingFragment StoreEntitySet="PlayerList">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="account" ColumnName="account" />
+          <ScalarProperty Name="pwd" ColumnName="pwd" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="babys">
+      <EntityTypeMapping TypeName="shopModel.babys">
+        <MappingFragment StoreEntitySet="babys">
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="dress" ColumnName="dress" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User_shoppingCart">
+      <EntityTypeMapping TypeName="shopModel.User_shoppingCart">
+        <MappingFragment StoreEntitySet="User-shoppingCart">
+          <ScalarProperty Name="item" ColumnName="item" />
+          <ScalarProperty Name="account" ColumnName="account" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

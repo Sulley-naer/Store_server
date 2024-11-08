@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="shopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="PlayerList">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="gender" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="account" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="pwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="PlayerList" EntityType="Self.PlayerList" />
+    <EntitySet Name="babys" EntityType="shopModel.babys" />
+    <EntitySet Name="User_shoppingCart" EntityType="shopModel.User_shoppingCart" />
+    <AssociationSet Name="item_bind" Association="shopModel.item_bind">
+      <End Role="babys" EntitySet="babys" />
+      <End Role="User_shoppingCart" EntitySet="User_shoppingCart" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="babys">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="city" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="time" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="dress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="photo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User_shoppingCart" Relationship="shopModel.item_bind" FromRole="babys" ToRole="User_shoppingCart" />
+  </EntityType>
+  <EntityType Name="User_shoppingCart">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="account" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="item" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="babys" Relationship="shopModel.item_bind" FromRole="User_shoppingCart" ToRole="babys" />
+  </EntityType>
+  <Association Name="item_bind">
+    <End Type="shopModel.babys" Role="babys" Multiplicity="1" />
+    <End Type="shopModel.User_shoppingCart" Role="User_shoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="babys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User_shoppingCart">
+        <PropertyRef Name="item" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

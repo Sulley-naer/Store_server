@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="shopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="babys">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="city" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="time" Type="date" Nullable="false" />
+    <Property Name="dress" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="photo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="price" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlayerList">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="gender" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="account" Type="varchar" MaxLength="50" />
+    <Property Name="pwd" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User-shoppingCart">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="account" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="item" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="item-bind">
+    <End Role="babys" Type="Self.babys" Multiplicity="1" />
+    <End Role="User-shoppingCart" Type="Self.User-shoppingCart" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="babys">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User-shoppingCart">
+        <PropertyRef Name="item" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--生成过程中发现错误:
+警告 6035: 关系“User-bind”在关系主端上有一些列不属于表的键的一部分。已排除了此关系。
+        <Association Name="User-bind" />-->
+  <EntityContainer Name="shopModelStoreContainer">
+    <EntitySet Name="babys" EntityType="Self.babys" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlayerList" EntityType="Self.PlayerList" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User-shoppingCart" EntityType="Self.User-shoppingCart" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="item-bind" Association="Self.item-bind">
+      <End Role="babys" EntitySet="babys" />
+      <End Role="User-shoppingCart" EntitySet="User-shoppingCart" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

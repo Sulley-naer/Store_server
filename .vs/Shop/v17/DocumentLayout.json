@@ -1,0 +1,75 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Administrator\\source\\repos\\Shop\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|C:\\Users\\Administrator\\source\\repos\\Shop\\shop\\models\\playerlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\playerlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "babys.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\babys.cs",
+              "RelativeDocumentMoniker": "Shop\\Models\\babys.cs",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\babys.cs",
+              "RelativeToolTip": "Shop\\Models\\babys.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAADwvxcAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-06T03:10:41.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Shop\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Shop\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAABkDAAAAAAAAAAAcwJYDAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-28T01:12:22.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlayerList.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\PlayerList.cs",
+              "RelativeDocumentMoniker": "Shop\\Models\\PlayerList.cs",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\PlayerList.cs",
+              "RelativeToolTip": "Shop\\Models\\PlayerList.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAAACAAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-01T05:26:58.914Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
