@@ -3,68 +3,85 @@
   "WorkspaceRootPath": "C:\\Users\\Administrator\\source\\repos\\Shop\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|C:\\Users\\Administrator\\source\\repos\\Shop\\shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|C:\\Users\\Administrator\\source\\repos\\Shop\\shop\\models\\playerlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\playerlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\orders.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\orders.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
     {
-      "Orientation": 1,
+      "Orientation": 0,
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 200,
-          "SelectedChildIndex": 1,
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "Name": "ST:0:0:{6d4078d1-5951-4ed1-ac0e-0a8099c1cce5}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "babys.cs",
               "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\babys.cs",
               "RelativeDocumentMoniker": "Shop\\Models\\babys.cs",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\babys.cs",
               "RelativeToolTip": "Shop\\Models\\babys.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAADwvxcAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T03:10:41.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Shop\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Shop\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAABkDAAAAAAAAAAAcwJYDAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAJYBAAAAAAAAAAAAALUBAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-28T01:12:22.004Z",
+              "WhenOpened": "2024-11-09T03:04:20.813Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PlayerList.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\PlayerList.cs",
-              "RelativeDocumentMoniker": "Shop\\Models\\PlayerList.cs",
-              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\PlayerList.cs",
-              "RelativeToolTip": "Shop\\Models\\PlayerList.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAACAAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Model.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\Model.cs",
+              "RelativeDocumentMoniker": "Shop\\Models\\Model.cs",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\Model.cs",
+              "RelativeToolTip": "Shop\\Models\\Model.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAQwBAAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-01T05:26:58.914Z",
+              "WhenOpened": "2024-11-10T04:56:27.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Orders.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\Orders.cs",
+              "RelativeDocumentMoniker": "Shop\\Models\\Orders.cs",
+              "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\Orders.cs",
+              "RelativeToolTip": "Shop\\Models\\Orders.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwCEAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-10T05:56:55.935Z",
               "EditorCaption": ""
             }
           ]

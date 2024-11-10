@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shop.Models
 {
-    using System;
-    using System.Collections.Generic;
     [Table(("shoppingCart"))]
     public partial class User_shoppingCart
     {
@@ -24,6 +22,5 @@ namespace Shop.Models
 
         [ForeignKey(nameof(item))]
         public virtual babys babys { get; set; }
-
     }
 }

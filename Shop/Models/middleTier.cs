@@ -26,8 +26,10 @@ namespace Shop.Models
         public string pwd { get; set; }
         public bool status { get; set; }
         public string orderNumber { get; set; }
+
         //详情页使用
         public string attribute { get; set; }
+
         public string brand { get; set; }
         public int defaultPrice { get; set; }
         public int defaultTotal { get; set; }
@@ -37,7 +39,11 @@ namespace Shop.Models
         public List<String> types { get; set; }
         public List<int> prices { get; set; }
         public List<int> totals { get; set; }
+
         //商家订单商品
         public List<int> babys { get; set; }
+
+        //退款
+        public string refund { get; set; }
     }
 }

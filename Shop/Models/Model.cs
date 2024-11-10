@@ -1,10 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Shop.Models
+﻿namespace Shop.Models
 {
-    using System;
     using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
 
     public class Model : DbContext
     {

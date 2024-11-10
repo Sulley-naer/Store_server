@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -23,7 +22,7 @@ namespace Shop.Controllers
         {
             return new string[] { "value1", "value2" };
         }
-    
+
         [HttpGet]
         [Route("test")]
         public IHttpActionResult Test()
@@ -166,6 +165,11 @@ namespace Shop.Controllers
         [Route("AddBabyCar")]
         public IHttpActionResult AddBabyCar([FromBody] User_shoppingCart value)
         {
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             if (value.account != null && value.item > 0)
             {
                 if (
@@ -264,8 +268,8 @@ namespace Shop.Controllers
             };
 
             var sql =
-                "INSERT INTO Orders (belong, baby, time, status) "
-                + "VALUES (@belong, @baby, @time, @status)";
+                "INSERT INTO Orders (belong, baby, time, status,refund) "
+                + "VALUES (@belong, @baby, @time, @status,'未开启')";
 
             try
             {
@@ -315,7 +319,6 @@ namespace Shop.Controllers
 
                 var temp = db
                     .Orders.Where(x => (x.time > value.startTime && x.time <= value.time))
-                    .Where(x => x.status.Equals(value.mode == "true") || value.mode == null)
                     .Where(x =>
                         (parse ? x.ID.Equals(Id) : value.query == null)
                         || (x.orderNumber.Equals(orderNumberGuid) || value.query == null)
@@ -323,7 +326,19 @@ namespace Shop.Controllers
                         || (x.belong.Contains(value.query) || value.query == null)
                     ); // 确保时间逻辑正确
 
-                before = temp.OrderBy(x => x.ID) // 按 ID 排序
+                // 分类
+                if (value.mode != "true" && value.mode != "false" && value.mode != null)
+                {
+                    temp = temp.Where(c => c.refund == value.mode);
+                }
+                else
+                {
+                    temp = temp.Where(x =>
+                        x.status.Equals(value.mode == "true") || value.mode == null
+                    );
+                }
+
+                before = temp.OrderBy(x => x.time) // 按 时间 排序
                     .Skip((value.page - 1) * 10) // 分页跳过
                     .Take(10) // 取 10 条记录
                     .ToList();
@@ -343,13 +358,14 @@ namespace Shop.Controllers
                 return BadRequest("请求异常");
 
             List<Orders> res = db
-                .Orders.Where(
-                    x => x.belong.Equals(value.username) &&
-                         (x.status == (value.type == "complete") ||
-                          x.status != (value.type == "wait") ||
-                          value.type == "All"
-                          )
+                .Orders.Where(x =>
+                    x.belong.Equals(value.username)
+                    && (
+                        x.status == (value.type == "complete")
+                        || x.status != (value.type == "wait")
+                        || value.type == "All"
                     )
+                )
                 .OrderBy(g => g.ID)
                 .Skip((value.page - 1) * 10)
                 .Take(10)
@@ -384,6 +400,58 @@ namespace Shop.Controllers
                     income = space.income,
                 }
             );
+        }
+
+        //个人信息开启退款
+        [HttpPost]
+        [Route("StratRefund")]
+        public IHttpActionResult StratRefund(Orders value)
+        {
+            if (value is null)
+            {
+                return BadRequest("异常请求");
+            }
+
+            Orders order = db.Orders.FirstOrDefault(x => x.orderNumber == value.orderNumber);
+            if (order == null)
+                return BadRequest("未发现订单");
+
+            if (order.handling_number == 0 || order.handling_number == 2)
+            {
+                order.refund = "待处理";
+                order.handling_number += 1;
+                return Ok(db.SaveChanges() > 0);
+            }
+            else
+            {
+                return BadRequest("无法再次操作");
+            }
+        }
+
+        //个人信息取消退款
+        [HttpPost]
+        [Route("cancelRefund")]
+        public IHttpActionResult cancelRefund(Orders value)
+        {
+            if (value is null)
+            {
+                return BadRequest("异常请求");
+            }
+
+            Orders order = db.Orders.FirstOrDefault(x => x.orderNumber == value.orderNumber);
+            if (order == null)
+                return BadRequest("未发现订单");
+
+            if (order.handling_number == 1 || order.handling_number == 3)
+            {
+                order.refund = "未开启";
+                order.handling_number -= 1;
+                return Ok(db.SaveChanges() > 0);
+            }
+            else
+            {
+                return BadRequest("无法再次操作");
+            }
         }
 
         //更新信息
@@ -721,7 +789,7 @@ namespace Shop.Controllers
             return Ok(db.SaveChanges() > 0);
         }
 
-        //TODO 详情页系列的款式下单修复已购买数量的准确问题
+        //TODO: 详情页系列的款式下单修复已购买数量的准确问题
 
         //图片删除
         [HttpPost]
@@ -752,6 +820,15 @@ namespace Shop.Controllers
             Orders @default = db.Orders.FirstOrDefault(x => x.ID == value.ID);
 
             @default.status = value.status;
+
+            if (
+                value.refund != null && @default.handling_number == 1
+                || @default.handling_number == 3
+            )
+            {
+                @default.refund = value.refund;
+                @default.handling_number += 1;
+            }
 
             if (@default.status)
             {
@@ -796,7 +873,7 @@ namespace Shop.Controllers
 
         //商家订单管理
         [HttpPost]
-        [Route("shopOrder")]
+        [Route("ShopOrder")]
         public IHttpActionResult ShopOrder([FromBody] middleTier value)
         {
             if (value.belongs == null)
@@ -823,7 +900,8 @@ namespace Shop.Controllers
                             order.baby,
                             order.time,
                             order.status,
-                            order.logistics
+                            order.logistics,
+                            order.refund
                         }
                     );
                 }
@@ -832,26 +910,24 @@ namespace Shop.Controllers
             int Id;
             bool parse = int.TryParse(value.query, out Id);
 
-            var temp = db
-                .Orders.Where(x =>
-                    (x.time > value.startTime && x.time <= value.time)
-                    && (x.status.Equals(value.mode == "true") || value.mode == null)
-                    && x.belong.Equals(value.belongs)
-                    && (
-                        (parse ? x.ID.Equals(Id) : value.query == null)
-                        || (x.orderNumber.Equals(orderNumberGuid) || value.query == null)
-                        || (x.baby.Contains(value.query) || value.query == null)
-                    )
+            var temp = db.Orders.Where(x =>
+                (x.time > value.startTime && x.time <= value.time)
+                && x.belong.Equals(value.belongs)
+                && (
+                    (parse ? x.ID.Equals(Id) : value.query == null)
+                    || (x.orderNumber.Equals(orderNumberGuid) || value.query == null)
+                    || (x.baby.Contains(value.query) || value.query == null)
                 )
-                .Select(x => new
-                {
-                    x.ID,
-                    x.orderNumber,
-                    x.baby,
-                    x.time,
-                    x.status,
-                    x.logistics
-                }); // 返回 ID orderNumber baby
+            );
+
+            if (value.mode != "true" && value.mode != "false" && value.mode != null)
+            {
+                temp = temp.Where(c => c.refund == value.mode);
+            }
+            else
+            {
+                temp = temp.Where(x => x.status.Equals(value.mode == "true") || value.mode == null);
+            }
 
             // 创建一个新的列表来存储结果
             before.AddRange(
@@ -863,30 +939,7 @@ namespace Shop.Controllers
 
             total = temp.Count();
 
-            ArrayList babyItems = new ArrayList();
-
-            foreach (var order in before)
-            {
-                var items = order.baby.Split(';'); // 按照分号分割
-
-                foreach (var item in items)
-                {
-                    var parts = item.Split('+');
-                    if (parts.Length == 2)
-                    {
-                        babyItems.Add(new { baby = parts[0], sum = parts[1] });
-                    }
-                }
-            }
-
-            return Ok(
-                new
-                {
-                    data = before,
-                    babys = babyItems.ToArray(),
-                    total
-                }
-            );
+            return Ok(new { data = before, total });
         }
 
         //商家发货
