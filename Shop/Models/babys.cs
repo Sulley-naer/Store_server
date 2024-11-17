@@ -8,7 +8,6 @@ namespace Shop.Models
     {
         [Column("id")]
         public int id { get; set; }
-
         public string name { get; set; }
         public string city { get; set; }
         public System.DateTime time { get; set; }
@@ -19,7 +18,9 @@ namespace Shop.Models
         public int total { get; set; }
         public int alreadyBuy { get; set; }
         public string belongs { get; set; }
+        [DefaultValue("个人所有")]
         public string brand { get; set; }
+        [DefaultValue("商家很懒暂未添加留言")]
         public string message { get; set; }
         public string attribute { get; set; } = "really";
 

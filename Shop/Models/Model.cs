@@ -16,5 +16,6 @@
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Orders> Orders { get; set; }
         public DbSet<DetailsPhoto> DetailsPhoto { get; set; }
+        public DbSet<shipped> shipped { get; set; }
     }
 }

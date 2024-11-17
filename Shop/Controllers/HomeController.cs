@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Http;
 using Shop.Models;
@@ -253,42 +257,74 @@ namespace Shop.Controllers
             return Ok(content);
         }
 
-        //添加订单
+        //添加订单 TODO 1. 商品数量正确添加，多订单不同商家同时看到订单。
         [HttpPost]
         [Route("addOrder")]
         public IHttpActionResult addOrder(Orders value)
         {
+            string orderUUID = Guid.NewGuid().ToString();
+
             Orders order = new Orders
             {
                 time = DateTime.Now,
                 belong = value.belong,
                 baby = value.baby,
-                status = false
+                status = false,
                 // 不再需要设置 orderNumber，因为它是 GUID 类型，会自动生成
             };
 
-            var sql =
-                "INSERT INTO Orders (belong, baby, time, status,refund) "
-                + "VALUES (@belong, @baby, @time, @status,'未开启')";
+            Guid uuid = GenerateUUID(value.belong, value.baby, value.time);
 
             try
             {
-                var result = db.Database.ExecuteSqlCommand(
+                var sql =
+                    "INSERT INTO Orders (belong, baby, time, status,refund,orderNumber) "
+                    + "VALUES (@belong, @baby, @time, @status,'未开启',@orderNumber)";
+
+                db.Database.ExecuteSqlCommand(
                     sql,
                     new SqlParameter("@belong", order.belong),
                     new SqlParameter("@baby", order.baby),
                     new SqlParameter("@time", order.time),
-                    new SqlParameter("@status", order.status)
+                    new SqlParameter("@status", order.status),
+                    new SqlParameter("@orderNumber", uuid)
                 );
 
-                return Ok(
-                    db.Orders.OrderByDescending(x => x.ID)
-                        .FirstOrDefault(x => x.belong == order.belong)
-                );
+                Orders res = db
+                    .Orders.OrderByDescending(x => x.ID)
+                    .FirstOrDefault(x => x.belong == order.belong);
+
+                if (res != null)
+                {
+                    generateOrders(value.baby, res.ID);
+
+                    return Ok(res);
+                }
+
+                return BadRequest("生成失败");
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        //手动生成UUID
+        public static Guid GenerateUUID(string belong, string baby, DateTime time)
+        {
+            // 将 `belong`、`baby` 和 `time` 拼接为一个字符串
+            string input = $"{belong}{baby}{time:O}"; // ISO 8601 格式
+
+            // 使用 MD5 哈希生成稳定 UUID
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hashBytes = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                // 确保长度为 16 字节（128 位）并设置版本和变体
+                hashBytes[6] = (byte)((hashBytes[6] & 0x0F) | 0x30); // 设置为版本 3
+                hashBytes[8] = (byte)((hashBytes[8] & 0x3F) | 0x80); // 设置为 RFC 4122 变体
+
+                return new Guid(hashBytes);
             }
         }
 
@@ -387,19 +423,19 @@ namespace Shop.Controllers
 
             PlayerList space = db.PlayerList.FirstOrDefault(x => x.id.Equals(value.id));
 
-            return Ok(
-                new
-                {
-                    name = space.name,
-                    gender = space.gender,
-                    phone = space.phone,
-                    email = space.email,
-                    DeliveryAddress = space.DeliveryAddress,
-                    birthday = space.birthday,
-                    hobbies = space.hobbies,
-                    income = space.income,
-                }
-            );
+            object res = new
+            {
+                name = space.name,
+                gender = space.gender,
+                phone = space.phone,
+                email = space.email,
+                DeliveryAddress = space.DeliveryAddress,
+                birthday = space.birthday,
+                hobbies = space.hobbies,
+                income = space.income,
+            };
+
+            return Ok(res);
         }
 
         //个人信息开启退款
@@ -505,23 +541,21 @@ namespace Shop.Controllers
                 message = res.message,
                 defaultTotal = res.total,
                 res = details
-                    .Select(x => new
+                    .Select(se => new
                     {
-                        type = x.Key,
-                        id = new { item = x.Select(z => z.position), id = x.Select(g => g.id) },
-                        price = x.FirstOrDefault()?.price, // Use null-conditional operator
-                        banner = x.Where(d => d.position.Equals("banner"))
+                        type = se.Key,
+                        id = new { item = se.Select(z => z.position), id = se.Select(g => g.id) },
+                        price = se.FirstOrDefault()?.price, // Use null-conditional operator
+                        banner = se.Where(d => d.position.Equals("banner"))
                             .Select(g => g.Photo)
                             .ToList(),
-                        show = x.Where(d => d.position.Equals("show"))
+                        show = se.Where(d => d.position.Equals("show"))
                             .Select(g => g.Photo)
                             .ToList(),
-                        total = x.FirstOrDefault(g => g.position.Equals("total")).total == null
+                        total = se.FirstOrDefault(g => g.position.Equals("total")).total,
+                        buy = se.FirstOrDefault(g => g.position.Equals("total")).alreadyBuy == null
                             ? 0
-                            : x.FirstOrDefault(g => g.position.Equals("total")).total,
-                        buy = x.FirstOrDefault(g => g.position.Equals("total")).alreadyBuy == null
-                            ? 0
-                            : x.FirstOrDefault(g => g.position.Equals("total")).alreadyBuy,
+                            : se.FirstOrDefault(g => g.position.Equals("total")).alreadyBuy,
                     })
                     .ToList(),
             };
@@ -718,16 +752,25 @@ namespace Shop.Controllers
                             file.SaveAs(fullPath);
                             uploadedFileNames.Add(uniqueFileName);
 
-                            Models.DetailsPhoto res = new Models.DetailsPhoto();
-                            res.Photo = uniqueFileName;
-                            res.total = 0;
-                            res.price = 0;
-                            res.Types = type;
-                            res.position = position;
-                            res.belong = belong;
-                            res.Baby = Baby;
+                            if (type != "默认")
+                            {
+                                Models.DetailsPhoto res = new Models.DetailsPhoto();
+                                res.Photo = uniqueFileName;
+                                res.total = 0;
+                                res.price = 0;
+                                res.Types = type;
+                                res.position = position;
+                                res.belong = belong;
+                                res.Baby = Baby;
 
-                            db.DetailsPhoto.Add(res);
+                                db.DetailsPhoto.Add(res);
+                            }
+                            else
+                            {
+                                babys item = db.babys.Find(Baby);
+                                item.photo = uniqueFileName;
+                            }
+
                             db.SaveChanges();
                         }
                     }
@@ -814,7 +857,7 @@ namespace Shop.Controllers
         public IHttpActionResult UpdateOrder(Orders value)
         {
             //订单状态修改,现在没有付款验证api,后续完善
-            if (value.ID == null)
+            if (value.ID == null || value.baby == null)
                 BadRequest("请求异常");
 
             Orders @default = db.Orders.FirstOrDefault(x => x.ID == value.ID);
@@ -845,7 +888,45 @@ namespace Shop.Controllers
             return Ok(db.SaveChanges() > 0);
         }
 
-        //删除订单
+        private void generateOrders(string babys, int order)
+        {
+            //正则拿取里面的所有ID
+            Regex regex = new Regex(@"(\d+)\+\d+:[^;]+");
+            MatchCollection matches = regex.Matches(babys);
+
+            List<int> ids = new List<int>();
+            foreach (Match match in matches)
+            {
+                if (match.Success)
+                {
+                    // 将 id 部分添加到 ids 列表中
+                    ids.Add(int.Parse(match.Groups[1].Value));
+                }
+            }
+
+            ArrayList belongs = new ArrayList();
+
+            //根据id拿到里面的对应商家
+            foreach (int id in ids)
+            {
+                string belong = db.babys.Find(id).belongs;
+                belongs.Add(belong);
+                shipped shipped = new shipped
+                {
+                    shop = belong,
+                    baby = id,
+                    logistics = "暂未发货",
+                    bindOrder = order
+                };
+                db.shipped.Add(shipped);
+            }
+
+            db.SaveChanges();
+
+            Console.WriteLine(belongs.Count);
+        }
+
+        //删除订单 TODO 后续多人订单的数据也跟着删除了
         [HttpPost]
         [Route("deleteOrder")]
         public IHttpActionResult DeleteOrder(Orders value)
@@ -907,14 +988,13 @@ namespace Shop.Controllers
                 }
             }
 
-            int Id;
-            bool parse = int.TryParse(value.query, out Id);
+            int id;
+            bool parse = int.TryParse(value.query, out id);
 
             var temp = db.Orders.Where(x =>
                 (x.time > value.startTime && x.time <= value.time)
-                && x.belong.Equals(value.belongs)
                 && (
-                    (parse ? x.ID.Equals(Id) : value.query == null)
+                    (parse ? x.ID.Equals(id) : value.query == null)
                     || (x.orderNumber.Equals(orderNumberGuid) || value.query == null)
                     || (x.baby.Contains(value.query) || value.query == null)
                 )
@@ -929,7 +1009,24 @@ namespace Shop.Controllers
                 temp = temp.Where(x => x.status.Equals(value.mode == "true") || value.mode == null);
             }
 
-            // 创建一个新的列表来存储结果
+            //商家检测,修复多订单，不同商家查看
+            List<int> orderList = db
+                .shipped.Where(p => p.shop.Equals(value.belongs))
+                .Select(shipped => shipped.bindOrder)
+                .ToList();
+
+            if (orderList == null || orderList.Count == 0)
+            {
+                return BadRequest("没有订单");
+            }
+
+            foreach (int i in orderList)
+            {
+                temp = temp.Where(x => x.ID.Equals(i));
+                var test = temp.ToList();
+            }
+
+            // 创建一个新的列表来存储结果,数组合并
             before.AddRange(
                 temp.OrderBy(x => x.ID) // 按 ID 排序
                     .Skip((value.page - 1) * 10) // 分页
@@ -940,6 +1037,36 @@ namespace Shop.Controllers
             total = temp.Count();
 
             return Ok(new { data = before, total });
+        }
+
+        //商家多订单物流管理
+        [HttpPost]
+        [Route("multiplayerMode")]
+        public IHttpActionResult multiplayerMode(middleTier value)
+        {
+            if (value == null)
+                return BadRequest("异常请求");
+
+            List<shipped> res = db
+                .shipped.Where(x => x.bindOrder == value.id && x.shop == value.belongs)
+                .ToList();
+
+            return Ok(res);
+        }
+
+        //商家多订单发货
+        [HttpPost]
+        [Route("ShippedDelivery")]
+        public IHttpActionResult ShippedDelivery(shipped value)
+        {
+            if (value == null)
+                return BadRequest("异常请求");
+
+            shipped res = db.shipped.Find(value.id);
+
+            res.logistics = value.logistics;
+
+            return Ok(db.SaveChanges() > 0);
         }
 
         //商家发货
@@ -958,7 +1085,16 @@ namespace Shop.Controllers
             }
             else
             {
-                @default.logistics = value.logistics;
+                int Count = db.shipped.Where(p => p.bindOrder == value.ID).ToList().Count;
+
+                if (Count < 2)
+                {
+                    @default.logistics = value.logistics;
+                }
+                else
+                {
+                    return BadRequest("多订单请发货前往详情页");
+                }
             }
 
             if (db.SaveChanges() > 0)
@@ -971,21 +1107,29 @@ namespace Shop.Controllers
             }
         }
 
-        //商家发货商品查看
+        //商家发货商品查看 TODO 数据库给 shipped 添加表同订单号的所有商家均发货后，再将订单的发货状态修改
         [HttpPost]
         [Route("OrderBabyList")]
         public IHttpActionResult OrderDeliveryDetails([FromBody] middleTier value)
         {
             //TODO 修复此处多款式缺少异常
-            if (value.babys == null)
+            if (value == null)
                 return BadRequest("请求异常");
 
             List<dynamic> res = new List<dynamic>();
 
             foreach (var item in value.babys)
             {
-                res.Add(db.babys.FirstOrDefault(x => x.id.Equals(item)));
+                res.Add(
+                    db.babys.FirstOrDefault(x =>
+                        x.id.Equals(item)
+                        && (value.belongs != null ? (x.belongs == value.belongs) : true)
+                    )
+                );
             }
+
+            if (res[0] == null)
+                res.RemoveAt(0);
 
             return Ok(res);
         }

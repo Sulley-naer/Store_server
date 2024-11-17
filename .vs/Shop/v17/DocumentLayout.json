@@ -11,11 +11,11 @@
       "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\babys.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|C:\\Users\\Administrator\\source\\repos\\Shop\\shop\\models\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|c:\\users\\administrator\\source\\repos\\shop\\shop\\models\\orders.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "AbsoluteMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|C:\\Users\\Administrator\\source\\repos\\Shop\\shop\\models\\orders.cs||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{5345A54A-F647-4255-A6E0-9384718CB6CA}|Shop\\Shop.csproj|solutionrelative:shop\\models\\orders.cs||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
@@ -26,11 +26,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{6d4078d1-5951-4ed1-ac0e-0a8099c1cce5}"
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3225f881-13f0-470c-9e7b-28d44e6a7237}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
@@ -40,10 +48,9 @@
               "RelativeDocumentMoniker": "Shop\\Models\\babys.cs",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Models\\babys.cs",
               "RelativeToolTip": "Shop\\Models\\babys.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T03:10:41.498Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T03:10:41.498Z"
             },
             {
               "$type": "Document",
@@ -53,7 +60,7 @@
               "RelativeDocumentMoniker": "Shop\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Shop\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAJYBAAAAAAAAAAAAALUBAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAABMEAAAAAAAAAADwv1gEAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T03:04:20.813Z",
               "EditorCaption": ""
@@ -68,8 +75,7 @@
               "RelativeToolTip": "Shop\\Models\\Model.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAQwBAAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T04:56:27.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T04:56:27.764Z"
             },
             {
               "$type": "Document",
@@ -81,8 +87,17 @@
               "RelativeToolTip": "Shop\\Models\\Orders.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAYwCEAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T05:56:55.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T05:56:55.935Z"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{4a9b7e51-aa16-11d0-a8c5-00a0c921a4d2}"
             }
           ]
         }

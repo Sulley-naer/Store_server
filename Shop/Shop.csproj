@@ -151,6 +151,7 @@
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\PlayerList.cs" />
+    <Compile Include="Models\shipped.cs" />
     <Compile Include="Models\User_shoppingCart.cs" />
     <Compile Include="Models\middleTier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
