@@ -438,6 +438,27 @@ namespace Shop.Controllers
             return Ok(res);
         }
 
+        //个人信息物流查看
+        [HttpPost]
+        [Route("GetLogistic")]
+        public IHttpActionResult GetLogistic(Orders value)
+        {
+            if (value == null || value.ID == 0)
+                return BadRequest("异常请求");
+            List<shipped> res = db.shipped.Where(x => x.bindOrder == value.ID).ToList();
+
+            if (res.Count == 1)
+            {
+                string log = db.Orders.Find(value.ID).logistics;
+                List<string> logistics = new List<string> { log };
+                return Ok(logistics);
+            }
+            else
+            {
+                return Ok(res);
+            }
+        }
+
         //个人信息开启退款
         [HttpPost]
         [Route("StratRefund")]
