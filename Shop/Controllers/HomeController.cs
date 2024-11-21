@@ -1012,6 +1012,7 @@ namespace Shop.Controllers
             int id;
             bool parse = int.TryParse(value.query, out id);
 
+            //搜索实现
             var temp = db.Orders.Where(x =>
                 (x.time > value.startTime && x.time <= value.time)
                 && (
@@ -1021,6 +1022,7 @@ namespace Shop.Controllers
                 )
             );
 
+            //筛选是否付款和任意。
             if (value.mode != "true" && value.mode != "false" && value.mode != null)
             {
                 temp = temp.Where(c => c.refund == value.mode);
@@ -1041,17 +1043,19 @@ namespace Shop.Controllers
                 return BadRequest("没有订单");
             }
 
-            temp = temp.Where(be => be.belong.Equals(value.belongs));
+            // 从 temp 中筛选出 orderList 中包含的 ID
+            var filteredOrders = temp.Where(te => orderList.Contains(te.ID)).ToList();
 
-            // 创建一个新的列表来存储结果,数组合并
-            before.AddRange(
-                temp.OrderBy(x => x.ID) // 按 ID 排序
-                    .Skip((value.page - 1) * 10) // 分页
-                    .Take(10) // 取 10 条记录
-                    .ToList()
-            );
+            // 将符合条件的订单加入结果
+            var paginatedOrders = filteredOrders
+                .OrderBy(x => x.ID) // 按 ID 排序
+                .Skip((value.page - 1) * 10) // 分页
+                .Take(10) // 取 10 条记录
+                .ToList();
 
-            total = temp.Count();
+            before.AddRange(paginatedOrders);
+
+            total = filteredOrders.Count();
 
             return Ok(new { data = before, total });
         }
