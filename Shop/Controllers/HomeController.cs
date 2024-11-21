@@ -1041,11 +1041,7 @@ namespace Shop.Controllers
                 return BadRequest("没有订单");
             }
 
-            foreach (int i in orderList)
-            {
-                temp = temp.Where(x => x.ID.Equals(i));
-                var test = temp.ToList();
-            }
+            temp = temp.Where(be => be.belong.Equals(value.belongs));
 
             // 创建一个新的列表来存储结果,数组合并
             before.AddRange(

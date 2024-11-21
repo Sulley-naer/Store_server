@@ -42,8 +42,7 @@
               "RelativeToolTip": "Shop\\Models\\babys.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-06T03:10:41.498Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-06T03:10:41.498Z"
             },
             {
               "$type": "Document",
@@ -53,7 +52,7 @@
               "RelativeDocumentMoniker": "Shop\\Controllers\\HomeController.cs",
               "ToolTip": "C:\\Users\\Administrator\\source\\repos\\Shop\\Shop\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Shop\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAALEBAAAAAAAAAAAcwMgBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAPoDAAAAAAAAAAAQwB0EAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-09T03:04:20.813Z",
               "EditorCaption": ""
@@ -68,8 +67,7 @@
               "RelativeToolTip": "Shop\\Models\\Model.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAQwBAAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T04:56:27.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T04:56:27.764Z"
             },
             {
               "$type": "Document",
@@ -81,8 +79,7 @@
               "RelativeToolTip": "Shop\\Models\\Orders.cs",
               "ViewState": "AgIAAA8AAAAAAAAAAAAYwCEAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-10T05:56:55.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-10T05:56:55.935Z"
             }
           ]
         }
